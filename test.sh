@@ -33,4 +33,16 @@ echo ""
 wrk -t12 -c400 -d10s --latency http://localhost:8080/goroutines
 kill %1
 
+echo ""
+echo "----------"
+echo "QUEUE"
+echo "----------"
+echo ""
+go build queue.go
+./queue > log &
+sleep 1
+wrk -t12 -c400 -d10s --latency http://localhost:8080
+#tail log
+kill %1
+
 #cat log
